@@ -1,7 +1,7 @@
 import hashlib
 import time
 
-# Define a Block
+
 class Block:
     def __init__(self, index, transactions, timestamp, previous_hash):
         self.index = index
@@ -14,7 +14,8 @@ class Block:
         block_string = str(self.index) + str(self.transactions) + str(self.timestamp) + str(self.previous_hash)
         return hashlib.sha256(block_string.encode()).hexdigest()
 
-# Blockchain Class
+
+
 class Blockchain:
     def __init__(self):
         self.chain = []
@@ -42,20 +43,30 @@ class Blockchain:
                 return False
         return True
 
-# Example Banking Transactions
+
 bank_chain = Blockchain()
 
-# Adding some transactions
-bank_chain.add_block({"sender": "Alice", "receiver": "Bob", "amount": 500})
-bank_chain.add_block({"sender": "Bob", "receiver": "Charlie", "amount": 200})
-bank_chain.add_block({"sender": "Charlie", "receiver": "David", "amount": 150})
+print("\n--- Simple Banking Blockchain ---")
+while True:
+    sender = input("Enter sender name (or type 'exit' to stop): ")
+    if sender.lower() == 'exit':
+        break
+    receiver = input("Enter receiver name: ")
+    amount = input("Enter amount: ")
 
-# Display the blockchain
+  
+    bank_chain.add_block({"sender": sender, "receiver": receiver, "amount": amount})
+    print("✅ Transaction added to blockchain!\n")
+
+
+print("\n========= BLOCKCHAIN DETAILS =========")
 for block in bank_chain.chain:
-    print(f"Block {block.index}:")
+    print(f"\nBlock {block.index}:")
     print(f"Transactions: {block.transactions}")
     print(f"Hash: {block.hash}")
-    print(f"Previous Hash: {block.previous_hash}\n")
+    print(f"Previous Hash: {block.previous_hash}")
 
-# Validate blockchain
+
+print("\n======================================")
 print("Is Blockchain Valid?", bank_chain.is_chain_valid())
+print("======================================")
